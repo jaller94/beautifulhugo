@@ -2,9 +2,41 @@
 
 ![Beautiful Hugo Theme Screenshot](https://github.com/halogenica/beautifulhugo/blob/master/images/screenshot.png)
 
+## Changes compared to halogenica/beautifulhugo
+- Removed: Many JavaScript features
+  - Highlight
+    - `.Site.Params.useHLJS` has been removed
+  - Katex - rendering LaTeX math equations
+  - Mermaid
+  - PhotoSwipe - image gallery
+  - Recaptcha
+  - Staticman
+- Removed: Content from external URLs
+  - `.Site.Params.selfHosted` has been removed and become the default
+  - Disqus - comments
+  - Google Search modal
+   - `.Site.Params.gcse` is now broken
+- Removed: Some obsolete HTML headers
+  - SEO meta tags specific to Twitter / X
+  - `<meta http-equiv="X-UA-Compatible" content="IE=edge">`
+- Changed: Show dates and modification dates of articles
+- Changed: Hide preview content of an article
+- Changed: Fonts and use of font-weight
+  - Don't make titles larger on small screens
+  - Remove most `font-weight: 800;`
+  - Only two font-family definitions: headings and everything else
+- Added:`.Params.toc` will show a Table of Content in an article
+
+### Should be upstream
+- Changed: Article application/ld+json in seo/structured/article.html
+- Changed: Post application/ld+json in seo/structured/post.html
+- Fixed: BreadcrumbList application/ld+json in seo/structured/breadcrumb.html
+- Fixed: Added :focus-within on many styles that had :hover for keyboard accessibility
+- Fixed: Keyboard navigation for the language dropdown
+
 ## Live demo
 
-See https://hugo-theme-beautifulhugo.netlify.app/
+See https://chrpaul.de
 
 ## Installation
 
@@ -66,76 +98,6 @@ Then, you can generate a different style by running:
 hugo gen chromastyles --style=trac > static/css/syntax.css
 ```
 
-#### Pygments - Old server side syntax highlighting
-
-To use this feature install Pygments (`pip install Pygments`) and add the following to your site parameters:
-
-```
-pygmentsStyle = "trac"
-pygmentsUseClassic = true
-```
-
-Pygments is mostly compatible with the newer Chroma. It is slower but has some additional theme options. I recommend Chroma over Pygments. Pygments will use `syntax.css` for highlighting, unless you also set the config `pygmentsUseClasses = false` which will generate the style code directly in the HTML file. 
-
-#### Highlight.js - Client side syntax highlighting
-```
-[Params]
-    useHLJS = true
-```
-
-Client side highlighting does not require pygments to be installed. This will use `highlight.min.css` instead of `syntax.css` for highlighting (effectively disabling Chroma). Highlight.js has a wider range of support for languages and themes, and an alternative highlighting engine.
-
-### Disqus support
-
-To use this feature, uncomment and fill out the `disqusShortname` parameter in `config.toml`.
-
-### Staticman support
-
-Add *Staticman* configuration section in `config.toml` or `config.yaml`
-
-Sample `config.toml` configuration
-
-```
-[Params.staticman]
-  api = "https://<API-ENDPOINT>/v3/entry/{GIT-HOST}/<USERNAME>/<REPOSITORY-BLOGNAME>/master/comments"
-[Params.staticman.recaptcha]
-      sitekey: "6LeGeTgUAAAAAAqVrfTwox1kJQFdWl-mLzKasV0v"
-      secret: "hsGjWtWHR4HK4pT7cUsWTArJdZDxxE2pkdg/ArwCguqYQrhuubjj3RS9C5qa8xu4cx/Y9EwHwAMEeXPCZbLR9eW1K9LshissvNcYFfC/b8KKb4deH4V1+oqJEk/JcoK6jp6Rr2nZV4rjDP9M7nunC3WR5UGwMIYb8kKhur9pAic="
-```
-
-Note: The public `API-ENDPOINT` https://staticman.net is currently hitting its API limit, so one may use other API instances to provide Staticman comment service.
-
-The section `[Params.staticman.recaptcha]` is *optional*.  To add reCAPTCHA to your site, you have to replace the default values with your own ones (to be obtained from Google.)  The site `secret` has to be encrypted with
-
-    https://<API-ENDPOINT>/v3/encrypt/<SITE-SECRET>
-
-You must also configure the `staticman.yml` in you blog website.
-
-```
-comments:
-  allowedFields: ["name", "email", "website", "comment"]
-  branch            : "master"
-  commitMessage     : "New comment in {options.slug}"
-  path: "data/comments/{options.slug}"
-  filename          : "comment-{@timestamp}"
-  format            : "yaml"
-  moderation        : true
-  requiredFields    : ['name', 'email', 'comment']
-  transforms:
-    email           : md5
-  generatedFields:
-    date:
-      type          : "date"
-      options:
-        format      : "iso8601"
-  reCaptcha:
-    enabled: true
-    siteKey: "6LeGeTgUAAAAAAqVrfTwox1kJQFdWl-mLzKasV0v"
-    secret: "hsGjWtWHR4HK4pT7cUsWTArJdZDxxE2pkdg/ArwCguqYQrhuubjj3RS9C5qa8xu4cx/Y9EwHwAMEeXPCZbLR9eW1K9LshissvNcYFfC/b8KKb4deH4V1+oqJEk/JcoK6jp6Rr2nZV4rjDP9M7nunC3WR5UGwMIYb8kKhur9pAic="
-```
-
-If you *don't* have the section `[Params.staticman]` in `config.toml`, you *won't* need the section `reCaptcha`  in `staticman.yml`
-
 ### Site Disclaimer
 
 If you need to put a Disclaimer on your website (e.g. "My views are my own and not my employer's"), you can do so via the following:
@@ -144,12 +106,6 @@ If you need to put a Disclaimer on your website (e.g. "My views are my own and n
 * If you need to adjust the disclaimer's styling, modify the declarations within the `footer div.disclaimer` selector in `static/css/main.css`.
 
 > The code for the disclaimer text is in `layouts/partials/footer.html`.  Moving this code block to another partial file (or relocating it within `footer.html`) will require changes to the css selector in `main.css` as well.
-
-### Google Analytics
-
-To add Google Analytics, simply sign up to [Google Analytics](https://www.google.com/analytics/) to obtain your Google Tracking ID, and add this tracking ID to the `googleAnalytics` parameter in `config.toml`.
-
-Note that the Google Analytics tracking code will only be inserted into the page when the site isn't served on Hugo's built-in server, to prevent tracking from local testing environments.
 
 ### Commit SHA on the footer
 

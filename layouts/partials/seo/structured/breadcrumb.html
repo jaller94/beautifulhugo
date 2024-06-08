@@ -5,17 +5,13 @@
   "itemListElement": [{
         "@type": "ListItem",
         "position": 1,
-        "item": {
-          "@id": "{{ .Site.BaseURL }}",
-          "name": "home"
-        }
+        "name": "home",
+        "item": "{{ .Site.BaseURL }}"
     },{
         "@type": "ListItem",
-        "position": 3,
-        "item": {
-          "@id": "{{ .Permalink }}",
-          "name": "{{ .Title | humanize }}"
-        }
+        "position": 2,
+        "name": "{{ .Title | humanize }}",
+        "item": "{{ .Permalink }}"
     }]
 }
 </script>

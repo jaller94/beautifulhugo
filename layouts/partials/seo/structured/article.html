@@ -3,25 +3,26 @@
   "@context": "http://schema.org",
   "@type": "Article",
   "author": {
-    "name" : "{{ if .Params.author -}}{{ .Params.author }}{{- else if .Site.Author.name -}}{{ .Site.Author.name }}{{- end }}"
+    "name" : "{{ if .Params.author -}}{{ .Params.author }}{{- else if .Site.Params.Author.name -}}{{ .Site.Params.Author.name }}{{- end }}",
+    "url" : "{{ if .Site.Params.Author.url -}}{{ .Site.Params.Author.url }}{{- end }}"
   },
   "headline": "{{ .Title }}",
   "description" : "{{ if .Description }}{{ .Description | plainify }}{{ else }}{{if .IsPage}}{{ .Summary | plainify  }}{{ end }}{{ end }}",
   "inLanguage" : "{{ .Lang }}",
   "wordCount": {{ .WordCount }},
-  "datePublished" : "{{ .PublishDate.Format "2006-01-02T15:04:05" }}",
-  "dateModified" : "{{ .Date.Format "2006-01-02T15:04:05"  }}",
+  "datePublished" : "{{- .PublishDate.Format "2006-01-02T15:04:05-07:00" }}",
+  "dateModified" : "{{- .Lastmod.Format "2006-01-02T15:04:05-07:00" }}",
   "image" : "{{ .Site.Params.logo | absURL }}",
   "keywords" : [ "{{ range $i, $e := .Params.tags }}{{ if $i }}, {{ end }}{{ $e }}{{ end }}" ],
   "mainEntityOfPage" : "{{ .Permalink }}",
   "publisher" : {
-    "@type": "Organization",
-    "name" : "{{ .Site.BaseURL }}",
+    "@type": "Person",
+    "name": "{{ .Site.Params.Author.name }}",
     "logo" : {
-        "@type" : "ImageObject",
-        "url" : "{{ .Site.Params.logo | absURL }}",
-        "height" :  60 ,
-        "width" :  60
+      "@type" : "ImageObject",
+      "url" : "{{ .Site.Params.Author.logo | absURL }}",
+      "height" :  60,
+      "width" :  60
     }
   }
 }
