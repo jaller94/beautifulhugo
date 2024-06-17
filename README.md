@@ -19,6 +19,8 @@
 - Removed: Some obsolete HTML headers
   - SEO meta tags specific to Twitter / X
   - `<meta http-equiv="X-UA-Compatible" content="IE=edge">`
+- Removed: Script for random emoticon on the 404 page
+- Changed: Add `aria-hidden="true"` for the emoticon on the 404 page
 - Changed: Show dates and modification dates of articles
 - Changed: Hide preview content of an article
 - Changed: Fonts and use of font-weight
@@ -30,6 +32,7 @@
 ### Should be upstream
 - Changed: Article application/ld+json in seo/structured/article.html
 - Changed: Post application/ld+json in seo/structured/post.html
+- Changed: Use `<main>` instead of `role="main"`
 - Fixed: BreadcrumbList application/ld+json in seo/structured/breadcrumb.html
 - Fixed: Added :focus-within on many styles that had :hover for keyboard accessibility
 - Fixed: Keyboard navigation for the language dropdown
